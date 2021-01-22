@@ -30,20 +30,20 @@ end
 ```ruby
 class Page < ActiveRecord::Base
   enum status: [:draft, :active, :archived]
-	logisticed :status, only: [:active, :archived]
+  logisticed :status, only: [:active, :archived]
 end
 ```
 
 现在就已经可以监听所有的操作人和操作时间等信息了
 ```ruby
 class PagesController < ApplicationController
-	def create
+  def create
     current_user # => #<User name: 'sss'>
     @page = Page.first # => #<Page status: 'draft'>
     @page.active!
     @page.active_at # => 2021-01-22 17:15:13 +0800
     @page.active_by # => #<User name: 'sss'>
-	end
+  end
 end
 ```
 
@@ -53,16 +53,16 @@ end
 
 ```ruby
 class PagesController < ApplicationController
-	def create
+  def create
     current_user # => #<User name: 'sss'>
     user = User.last # => #<User name: 'smx'>
     Logisticed::Logistic.as_user(user) do
-    	@page = Page.first # => #<Page status: 'draft'>
-    	@page.active!
-    	@page.active_at # => 2021-01-22 17:15:13 +0800
-    	@page.active_by # => #<User name: 'smx'>
+      @page = Page.first # => #<Page status: 'draft'>
+      @page.active!
+      @page.active_at # => 2021-01-22 17:15:13 +0800
+      @page.active_by # => #<User name: 'smx'>
     end
-	end
+  end
 end
 ```
 # setting
@@ -71,9 +71,9 @@ end
 # config/initializers/logisticed.rb
 
 Logisticed.config do |config|
-	config.current_user_method                = :authenticated_user
-	# if your table primary_key type is uuid
-	config.logisticed_source_id_column_type   = :uuid
-	config.logisticed_operator_id_column_type = :uuid
+  config.current_user_method                = :authenticated_user
+  # if your table primary_key type is uuid
+  config.logisticed_source_id_column_type   = :uuid
+  config.logisticed_operator_id_column_type = :uuid
 end
 ```
