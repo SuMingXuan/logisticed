@@ -8,9 +8,11 @@ CreateLogisticsMigration.class_eval do
     create_table Logisticed.logisticed_table do |t|
       t.string :source_type
       t.send(Logisticed.logisticed_source_id_column_type, :source_id)
-      t.string :operator_by
+      t.string :operator_type
       t.send(Logisticed.logisticed_operator_id_column_type, :operator_id)
       t.string :value
+      t.string :remote_ip
+      t.string :request_uuid
       t.datetime :created_at, null: false
     end
     add_index Logisticed.logisticed_table, [:source_type, :source_id], name: 'logisticed_source_index'
