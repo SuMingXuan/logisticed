@@ -38,11 +38,11 @@ end
 ```ruby
 class PagesController < ApplicationController
 	def create
-		current_user # => #<User name: 'sss'>
-		@page = Page.first # => #<Page status: 'draft'>
-		@page.active!
-		@active_at # => 2021-01-22 17:15:13 +0800
-		@active_by # => #<User name: 'sss'>
+    current_user # => #<User name: 'sss'>
+    @page = Page.first # => #<Page status: 'draft'>
+    @page.active!
+    @page.active_at # => 2021-01-22 17:15:13 +0800
+    @page.active_by # => #<User name: 'sss'>
 	end
 end
 ```
@@ -54,14 +54,14 @@ end
 ```ruby
 class PagesController < ApplicationController
 	def create
-		current_user # => #<User name: 'sss'>
-		user = User.last # => #<User name: 'smx'>
-		Logisticed::Logistic.as_user(user) do
-			@page = Page.first # => #<Page status: 'draft'>
-			@page.active!
-			@active_at # => 2021-01-22 17:15:13 +0800
-			@active_by # => #<User name: 'smx'>
-		end
+    current_user # => #<User name: 'sss'>
+    user = User.last # => #<User name: 'smx'>
+    Logisticed::Logistic.as_user(user) do
+    	@page = Page.first # => #<Page status: 'draft'>
+    	@page.active!
+    	@page.active_at # => 2021-01-22 17:15:13 +0800
+    	@page.active_by # => #<User name: 'smx'>
+    end
 	end
 end
 ```
