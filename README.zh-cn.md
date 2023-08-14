@@ -1,34 +1,34 @@
 # Logisticed
+轻松记录每条记录状态变更时的操作时间以及操作人
+## 安装
 
-[中文文档](README.zh-cn.md)
-
-Easily record the operation time and operator for each record's status change.
-## Installation
-
-Add this line to your application's Gemfile:
+在你的 `Gemfile` 文件中添加 `logisticed`
 
 ```ruby
 gem 'logisticed'
 ```
 
-Then, from your Rails app directory, create the `logistics` table:
+然后，从 Rails 应用程序目录中创建 `logistics` 表
+
 ```bash
 $ rake logisticed_migration:install:migrations
 $ rails db:migrate
 ```
-## Usage
 
-You only need to tell logisticed which field to listen to and when it is changed to what value.
+## 用法
 
-It will provide you with several methods like `active_at`, `active_by`, `archived_at`, `archived_by`, giving you the recent operation history for a specific status.
+你只需要告诉 `logisticed` 需要监听什么字段，并且被修改为什么值的时候就行了。
+
+他将会为你提供 `active_at`、 `active_by`、 `archived_at`、 `archived_by` 这几个方法，为你提供某个状态最近的操作历史。
 
 ```ruby
 class Page < ActiveRecord::Base
   logisticed :status, values: [:active, :archived]
 end
+
 ```
 
-If you've defined an `enum` type field in the model, you can directly add logisticed below the enum definition. It will automatically listen to all values of the enum. 
+如果在 model 中定义了枚举类型的字段，也可以在定义枚举的下面直接添加 `logisticed`，他会自动为你监听枚举的所有值。
 
 ```ruby
 class Page < ActiveRecord::Base
@@ -37,7 +37,7 @@ class Page < ActiveRecord::Base
 end
 ```
 
-At the same time, logisticed supports the `only` and `except` parameters.
+同时 logisticed 支持 `only` 和 `except` 这两个参数
 
 ```ruby
 class Page < ActiveRecord::Base
@@ -46,8 +46,7 @@ class Page < ActiveRecord::Base
 end
 ```
 
-
-Now you can listen to all the information about operators and operation time.
+现在就已经可以监听所有的操作人和操作时间等信息了
 
 ```ruby
 class PagesController < ApplicationController
@@ -61,9 +60,9 @@ class PagesController < ApplicationController
 end
 ```
 
-You can use `@page.logistics` to get all change processes for the record, or use `@page.active_logistics` to get all change processes when the status becomes active.
+当然你也可以使用 `@page.logistics` 得到 @page 这条记录的所有变更流程，也可以使用 `@page.active_logistics` 得到状态变为 active 的所有变更流程
 
-In addition, you can use `as_user` to specify a user as an operator.
+除此之外你也可以使用 `as_user` 制定某个用户成为操作人员
 
 ```ruby
 class PagesController < ApplicationController
@@ -79,7 +78,7 @@ class PagesController < ApplicationController
   end
 end
 ```
-# setting
+# 设置
 
 ```ruby
 # config/initializers/logisticed.rb
